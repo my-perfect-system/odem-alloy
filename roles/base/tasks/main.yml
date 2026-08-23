@@ -1,0 +1,5 @@
+---
+
+# No tasks — this role is a variable + handler carrier. It provides the
+# shared alloy_* defaults and the "Restart alloy" handler to every other
+# odem.alloy role via meta dependencies.

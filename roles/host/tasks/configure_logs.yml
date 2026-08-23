@@ -1,0 +1,32 @@
+---
+
+- name: Render logs_system.alloy
+  ansible.builtin.template:
+    src: logs_system.alloy.j2
+    dest: "{{ base_config_dir }}/logs_system.alloy"
+    owner: root
+    group: "{{ user_default_admin_group }}"
+    mode: "0664"
+  become: true
+  notify: Restart alloy
+
+- name: Add alloy user to adm group
+  ansible.builtin.user:
+    name: "{{ base_user }}"
+    groups: adm
+    append: true
+  become: true
+
+- name: Add alloy user to systemd-journal group
+  ansible.builtin.user:
+    name: "{{ base_user }}"
+    groups: systemd-journal
+    append: true
+  become: true
+
+- name: Add alloy user to systemd-journal group
+  ansible.builtin.user:
+    name: "{{ base_user }}"
+    groups: utmp
+    append: true
+  become: true

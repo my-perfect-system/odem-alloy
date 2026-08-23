@@ -1,0 +1,11 @@
+---
+
+- name: Render metrics_system.alloy
+  ansible.builtin.template:
+    src: metrics_system.alloy.j2
+    dest: "{{ base_config_dir }}/metrics_system.alloy"
+    owner: root
+    group: "{{ user_default_admin_group }}"
+    mode: "0664"
+  become: true
+  notify: Restart alloy

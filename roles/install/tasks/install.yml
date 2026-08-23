@@ -1,0 +1,91 @@
+---
+
+- name: Install gpg package
+  ansible.builtin.apt:
+    name: gpg
+    state: present
+    update_cache: true
+  become: true
+
+- name: Create apt keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Download Grafana apt signing key
+  ansible.builtin.get_url:
+    url: https://apt.grafana.com/gpg-full.key
+    dest: /etc/apt/keyrings/grafana.asc
+    owner: root
+    group: root
+    mode: "0644"
+    force: true
+  become: true
+
+- name: Add Grafana apt repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [signed-by=/etc/apt/keyrings/grafana.asc]
+      https://apt.grafana.com stable main
+    filename: grafana
+    state: present
+    update_cache: true
+  become: true
+
+- name: Install alloy package
+  ansible.builtin.apt:
+    name: alloy
+    state: present
+    update_cache: true
+  become: true
+
+- name: Create alloy state directory
+  ansible.builtin.file:
+    path: /var/lib/alloy
+    state: directory
+    owner: "{{ base_user }}"
+    group: "{{ user_default_admin_group }}"
+    recurse: true
+  become: true
+
+- name: Render alloy default env file
+  ansible.builtin.template:
+    src: alloy.default.j2
+    dest: "{{ base_env_file }}"
+    owner: root
+    group: "{{ user_default_admin_group }}"
+    mode: "0664"
+  become: true
+  notify: Restart alloy
+
+- name: Ensure alloy systemd override directory exists
+  ansible.builtin.file:
+    path: /etc/systemd/system/alloy.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Render alloy systemd capability override
+  ansible.builtin.template:
+    src: alloy.service.override.j2
+    dest: /etc/systemd/system/alloy.service.d/override.conf
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify: Restart alloy
+  when: install_enable_dac_read_search | bool
+
+- name: Enable and start alloy service
+  ansible.builtin.systemd:
+    name: alloy
+    enabled: true
+    state: started
+    daemon_reload: true
+  become: true

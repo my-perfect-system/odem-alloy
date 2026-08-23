@@ -1,0 +1,11 @@
+---
+
+# Feature toggles — naming pattern: docker_enable_<feature>
+
+docker_enable_logs: true
+
+docker_enable_metrics: true
+
+# Regular configuration
+
+docker_metrics_exclude_containers: []

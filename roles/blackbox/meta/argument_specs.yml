@@ -1,0 +1,47 @@
+---
+argument_specs:
+  main:
+    short_description: Prometheus blackbox exporter install and Alloy scrape config
+    description:
+      - Installs prometheus-blackbox-exporter, renders its default env file,
+        systemd override unit, and the blackbox.yml modules config.
+      - Renders the blackbox_exporter_scrape.alloy fragment so Alloy scrapes
+        the configured probe targets.
+      - Exporter install and scrape config are gated independently.
+    options:
+      blackbox_enable_exporter:
+        type: bool
+        required: false
+        default: true
+        description: "Install and configure the blackbox exporter"
+      blackbox_enable_scrape:
+        type: bool
+        required: false
+        default: true
+        description: "Render the Alloy blackbox scrape fragment"
+      blackbox_exporter_port:
+        type: int
+        required: false
+        default: 9115
+        description: "Port the blackbox exporter listens on"
+      blackbox_config_file:
+        type: str
+        required: false
+        default: /etc/prometheus/blackbox.yml
+        description: "Path to the blackbox.yml modules config"
+      blackbox_exporter_extra_args:
+        type: str
+        required: false
+        default: ""
+        description: "Extra CLI args passed to the blackbox exporter"
+      blackbox_modules:
+        type: dict
+        required: false
+        default: {}
+        description: "Blackbox module definitions (required when exporter is enabled)"
+      blackbox_probe_targets:
+        type: list
+        required: false
+        elements: dict
+        default: []
+        description: "List of {name, target, module} probes (required when scrape is enabled)"

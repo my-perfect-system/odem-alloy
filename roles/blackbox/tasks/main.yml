@@ -1,0 +1,13 @@
+---
+
+- name: Install exporter
+  ansible.builtin.include_tasks: install_exporter.yml
+  when: blackbox_enable_exporter | bool
+
+- name: Configure blackbox modules
+  ansible.builtin.include_tasks: configure_modules.yml
+  when: blackbox_enable_exporter | bool
+
+- name: Configure exporter scrape
+  ansible.builtin.include_tasks: configure_exporter_scrape.yml
+  when: blackbox_enable_scrape | bool

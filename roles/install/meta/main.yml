@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: foo <bar@baz.com>
+  description: "Install Grafana Alloy agent and base configuration"
+  min_ansible_version: "2.16.0"
+  license: GPL-3.0-or-later
+  platforms:
+    - name: Debian
+      versions:
+        - trixie
+  galaxy_tags:
+    - debian
+    - debian13
+    - trixie
+    - alloy
+    - observability
+    - metrics
+    - logs
+    - odem-alloy
+dependencies:
+  - role: odem.base.identity
+  - role: odem.alloy.base

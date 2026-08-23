@@ -1,0 +1,26 @@
+---
+argument_specs:
+  main:
+    short_description: Docker container metrics and logs collection for Alloy
+    description:
+      - Deploys the Docker telemetry River fragments, i.e. docker_metrics.alloy
+        (Docker discovery + scrape with a relabel drop list) and
+        docker_logs.alloy (Docker log collection to Loki).
+      - Each fragment is gated by its own docker_enable_<feature> toggle.
+    options:
+      docker_enable_logs:
+        type: bool
+        required: false
+        default: true
+        description: "Deploy the docker_logs.alloy fragment (container logs to Loki)"
+      docker_enable_metrics:
+        type: bool
+        required: false
+        default: true
+        description: "Deploy the docker_metrics.alloy fragment (container metric scraping)"
+      docker_metrics_exclude_containers:
+        type: list
+        required: false
+        elements: str
+        default: []
+        description: "Container names dropped from metric scraping via relabel"

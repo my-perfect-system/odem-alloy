@@ -1,0 +1,9 @@
+---
+
+- name: Configure docker logs
+  ansible.builtin.include_tasks: configure_docker_logs.yml
+  when: docker_enable_logs | bool
+
+- name: Configure docker metrics
+  ansible.builtin.include_tasks: configure_docker_metrics.yml
+  when: docker_enable_metrics | bool

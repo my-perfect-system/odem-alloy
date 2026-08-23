@@ -13,7 +13,14 @@ See [`galaxy.yml`](galaxy.yml) for the canonical values.
 
 ## Roles
 
-None yet.
+| Role | Purpose |
+|---|---|
+| [`odem.alloy.base`](roles/base/README.md) | Shared base role — common `base_*` variables and the `Restart alloy` handler. |
+| [`odem.alloy.install`](roles/install/README.md) | Install the Grafana Alloy agent and deploy the base River config (logging + remotes). |
+| [`odem.alloy.host`](roles/host/README.md) | Deploy host telemetry fragments (metrics_system + logs_system). |
+| [`odem.alloy.docker`](roles/docker/README.md) | Deploy Docker telemetry fragments (docker_metrics + docker_logs). |
+| [`odem.alloy.cadvisor`](roles/cadvisor/README.md) | Deploy the cadvisor fragment (container cAdvisor metrics). |
+| [`odem.alloy.blackbox`](roles/blackbox/README.md) | Install the blackbox exporter and its Alloy scrape config. |
 
 ## Installation
 

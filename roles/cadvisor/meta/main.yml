@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: foo <bar@baz.com>
+  description: "Container cAdvisor metrics collection for Alloy"
+  min_ansible_version: "2.16.0"
+  license: GPL-3.0-or-later
+  platforms:
+    - name: Debian
+      versions:
+        - trixie
+  galaxy_tags:
+    - debian
+    - debian13
+    - trixie
+    - alloy
+    - observability
+    - docker
+    - containers
+    - cadvisor
+    - metrics
+    - odem-alloy
+dependencies:
+  - role: odem.alloy.base

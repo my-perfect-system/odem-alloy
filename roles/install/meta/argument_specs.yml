@@ -1,0 +1,20 @@
+---
+argument_specs:
+  main:
+    short_description: Install Grafana Alloy agent and base configuration
+    description:
+      - Installs the Grafana Alloy agent from the official Grafana apt
+        repository and deploys the base River config fragments
+        (logging.alloy + remotes.alloy) plus the /etc/default/alloy env file.
+      - Stale *.alloy fragments are removed before re-rendering so disabled
+        features are cleaned up on the next run.
+      - Only stdlib and ansible.posix collections are required on top of
+        odem.base.
+      - Shared base_* variables (user, config dir, ports, labels, remotes)
+        are provided by the odem.alloy.base dependency.
+    options:
+      install_enable_dac_read_search:
+        type: bool
+        required: false
+        default: true
+        description: "Grant the alloy service CAP_DAC_READ_SEARCH so cAdvisor can read the cgroup tree as a non-root user"

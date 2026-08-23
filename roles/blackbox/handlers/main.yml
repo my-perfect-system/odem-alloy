@@ -1,0 +1,13 @@
+---
+
+- name: Restart blackbox-exporter
+  ansible.builtin.systemd:
+    name: prometheus-blackbox-exporter
+    state: restarted
+  become: true
+
+- name: Restart alloy
+  ansible.builtin.systemd:
+    name: alloy
+    state: restarted
+  become: true

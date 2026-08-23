@@ -1,0 +1,25 @@
+---
+
+# Feature toggles — naming pattern: blackbox_enable_<feature>
+blackbox_enable_exporter: true
+blackbox_enable_scrape: true
+
+# Regular configuration
+blackbox_exporter_port: 9115
+blackbox_config_file: /etc/prometheus/blackbox.yml
+blackbox_exporter_extra_args: ""
+blackbox_modules:
+  http_2xx:
+    prober: http
+    timeout: 5s
+    http:
+      preferred_ip_protocol: ip4
+      method: GET
+      fail_if_not_ssl: true
+blackbox_probe_targets:
+  - name: google.de
+    target: https://www.google.de
+    module: http_2xx
+
+# blackbox_modules: {}
+# blackbox_probe_targets: []

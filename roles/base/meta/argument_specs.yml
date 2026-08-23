@@ -1,0 +1,50 @@
+---
+argument_specs:
+  main:
+    short_description: Shared base role for the odem.alloy collection
+    description:
+      - Carries the common base_* variables and the shared "Restart alloy"
+        handler. Every other role in the collection declares this as a meta
+        dependency, so these defaults are available across all fragment roles.
+      - No tasks — do not run directly; it is a dependency, not a functional role.
+    options:
+      base_user:
+        type: str
+        required: false
+        default: alloy
+        description: "System user the Alloy service runs as"
+      base_config_dir:
+        type: str
+        required: false
+        default: /etc/alloy
+        description: "Directory holding the Alloy River config fragments"
+      base_env_file:
+        type: str
+        required: false
+        default: /etc/default/alloy
+        description: "Path to the Alloy default env file"
+      base_web_ui_port:
+        type: int
+        required: false
+        default: 12345
+        description: "Port the Alloy web UI listens on"
+      base_metrics_port:
+        type: int
+        required: false
+        default: 9400
+        description: "Port Alloy publishes its own metrics on"
+      base_custom_labels:
+        type: str
+        required: false
+        default: "os=debian13,systype=hw,physloc=de"
+        description: "Comma-separated k=v labels applied to both remote_write external_labels"
+      base_remote_prometheus_url:
+        type: str
+        required: false
+        default: "http://10.10.100.180:9090/api/v1/write"
+        description: "Prometheus remote_write endpoint (Mimir)"
+      base_remote_loki_url:
+        type: str
+        required: false
+        default: "http://10.10.100.180:3100/loki/api/v1/push"
+        description: "Loki push endpoint"

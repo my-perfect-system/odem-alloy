@@ -1,0 +1,72 @@
+---
+
+# Feature toggles — naming pattern: host_enable_<feature>
+host_enable_logs: true
+host_enable_metrics: true
+
+# Regular configuration
+
+alloy_syslog_paths:
+  - /var/log/syslog
+  - /var/log/auth.log
+  - /var/log/cron.log
+  - /var/log/kern.log
+  - /var/log/unattended-upgrades
+  - /var/log/user.log
+  - /var/log/wtmp
+  - /var/log/lastlog
+alloy_host_collectors:
+  - arp
+  - bcache
+  - bonding
+  - boottime
+  - btrfs
+  - buddyinfo
+  - cpu
+  - diskstats
+  - dmi
+  - drm
+  - edac
+  - entropy
+  - ethtool
+  - filefd
+  - filesystem
+  - hwmon
+  - interrupts
+  - ksmd
+  - lnstat
+  - loadavg
+  - logind
+  - meminfo
+  - meminfo_numa
+  - mountstats
+  - netclass
+  - netdev
+  - netstat
+  - network_route
+  - os
+  - perf
+  - powersupplyclass
+  - pressure
+  - processes
+  - qdisc
+  - rapl
+  - schedstat
+  - sockstat
+  - softirqs
+  - softnet
+  - stat
+  - sysctl
+  - systemd
+  - tcpstat
+  - textfile
+  - thermal_zone
+  - time
+  - timex
+  - udp_queues
+  - uname
+  - vmstat
+  - wifi
+  - xfs
+  - zfs
+  - zoneinfo

@@ -1,0 +1,30 @@
+---
+argument_specs:
+  main:
+    short_description: Host system metrics and logs collection for Alloy
+    description:
+      - Deploys the base host-telemetry River fragments, i.e. metrics_system.alloy
+        (unix node_exporter with a configurable collector set) and
+        logs_system.alloy (journald + syslog file tailing).
+      - Each fragment is gated by its own host_enable_<feature> toggle.
+    options:
+      host_enable_logs:
+        type: bool
+        required: false
+        default: true
+        description: "Deploy the logs_system.alloy fragment (journald + syslog files)"
+      host_enable_metrics:
+        type: bool
+        required: false
+        default: true
+        description: "Deploy the metrics_system.alloy fragment (unix/node_exporter metrics)"
+      alloy_syslog_paths:
+        type: list
+        required: false
+        elements: str
+        description: "Syslog files tailed into Loki"
+      alloy_host_collectors:
+        type: list
+        required: false
+        elements: str
+        description: "unix exporter collectors enabled (node_exporter set_collectors)"

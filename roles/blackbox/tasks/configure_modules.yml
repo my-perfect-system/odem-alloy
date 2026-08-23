@@ -1,0 +1,11 @@
+---
+
+- name: Render blackbox.yml modules config
+  ansible.builtin.template:
+    src: blackbox.yml.j2
+    dest: "{{ blackbox_config_file }}"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify: Restart blackbox-exporter

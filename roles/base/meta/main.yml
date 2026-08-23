@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: foo <bar@baz.com>
+  description: "Shared base role — common alloy variables and restart handler"
+  min_ansible_version: "2.16.0"
+  license: GPL-3.0-or-later
+  platforms:
+    - name: Debian
+      versions:
+        - trixie
+  galaxy_tags:
+    - debian
+    - debian13
+    - trixie
+    - alloy
+    - observability
+    - odem-alloy
+dependencies:
+  - role: odem.base.common

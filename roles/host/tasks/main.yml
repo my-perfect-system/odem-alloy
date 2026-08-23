@@ -1,0 +1,9 @@
+---
+
+- name: Configure host default logs
+  ansible.builtin.include_tasks: configure_logs.yml
+  when: host_enable_logs | bool
+
+- name: Configure host node_exporter metrics
+  ansible.builtin.include_tasks: configure_metrics.yml
+  when: host_enable_metrics | bool
