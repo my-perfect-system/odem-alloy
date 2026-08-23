@@ -1,0 +1,32 @@
+---
+namespace: odem
+name: alloy
+version: 0.1.0
+readme: README.md
+authors:
+  - foo <bar@baz.com>
+description: Grafana Alloy agent deployment and configuration
+license:
+  - GPL-3.0-or-later
+tags:
+  - linux
+  - alloy
+  - observability
+  - metrics
+  - logs
+  - odem
+repository: https://github.com/my-perfect-system/odem-alloy
+documentation: https://github.com/my-perfect-system/odem-alloy
+homepage: https://github.com/my-perfect-system/odem-alloy
+issues: https://github.com/my-perfect-system/odem-alloy/issues
+build_ignore:
+  .ansible-lint
+  .yamllint
+  - .git
+  - .github
+  - .gitignore
+  - "*.tar.gz"
+  - .ansible
+dependencies:
+  odem.base: ">=0.1.0"
+  ansible.posix: ">=1.0.0"
