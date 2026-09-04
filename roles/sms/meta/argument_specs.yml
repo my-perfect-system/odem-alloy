@@ -1,0 +1,68 @@
+---
+argument_specs:
+  main:
+    short_description: Simple Metrics Server (sms) exporter install and Alloy scrape config
+    description:
+      - Clones the sms-webapp repository to the common repo location, installs
+        it into a local virtual environment and runs it as a systemd service.
+      - Renders the sms_exporter_scrape.alloy fragment so Alloy scrapes the
+        exporter and forwards custom metrics to the configured remote.
+      - Exporter install and scrape config are gated independently.
+      - The exporter serves plain http on localhost only; the metric handler
+        configs (data/config/*.json) are managed inside the repo itself.
+    options:
+      sms_enable_exporter:
+        type: bool
+        required: false
+        default: true
+        description: "Clone, install and configure the sms exporter service"
+      sms_enable_scrape:
+        type: bool
+        required: false
+        default: true
+        description: "Render the Alloy sms scrape fragment"
+      sms_repo_url:
+        type: str
+        required: false
+        default: https://github.com/simple-metrics-server/sms-webapp.git
+        description: "Git repository of the sms exporter"
+      sms_repo_version:
+        type: str
+        required: false
+        default: main
+        description: "Branch, tag or commit to check out"
+      sms_repo_dest:
+        type: str
+        required: false
+        default: "{{ common_default_repo_dir }}/github/simple-metrics-server/sms-webapp"
+        description: "Clone location (common repo dir, foreign org layout)"
+      sms_bind:
+        type: str
+        required: false
+        default: 127.0.0.1
+        description: "Address the exporter binds to (scraped by the local Alloy agent)"
+      sms_port:
+        type: int
+        required: false
+        default: 9555
+        description: "Port the exporter listens on"
+      sms_scrape_interval:
+        type: str
+        required: false
+        default: 10s
+        description: "Alloy scrape interval for the exporter endpoint"
+      sms_app_scrape_interval:
+        type: int
+        required: false
+        default: 60
+        description: "Exporter SCRAPE_INTERVAL in seconds (handler collection cycle)"
+      sms_service_name:
+        type: str
+        required: false
+        default: sms-webapp
+        description: "Name of the systemd service"
+      sms_env_file:
+        type: str
+        required: false
+        default: /etc/default/sms-webapp
+        description: "Path to the exporter default env file"

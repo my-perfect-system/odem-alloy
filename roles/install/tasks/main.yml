@@ -34,3 +34,6 @@
 
 - name: Configure remotes
   ansible.builtin.include_tasks: configure_remotes.yml
+
+- name: Configure livedebugging
+  ansible.builtin.include_tasks: configure_livedebugging.yml

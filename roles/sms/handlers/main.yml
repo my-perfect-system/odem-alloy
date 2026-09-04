@@ -1,0 +1,7 @@
+---
+
+- name: Restart sms-webapp
+  ansible.builtin.systemd:
+    name: "{{ sms_service_name }}"
+    state: restarted
+  become: true

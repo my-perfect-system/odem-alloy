@@ -1,17 +1,25 @@
 prometheus.remote_write "mimir" {
   endpoint { url = "{{ base_remote_prometheus_url }}" }
   external_labels = {
-{% set _lp = base_custom_labels | split(',') %}
-{% for _p in _lp %}{% set _kv = _p | split('=') %}
-    {{ _kv[0] | trim }} = "{{ _kv[1] | trim }}",
-{% endfor %}
+        mps_alloy_hostname = constants.hostname,
+        mps_alloy_os_type = constants.os,
+        mps_alloy_arch = constants.arch,
+        mps_alloy_version = constants.version,
+        {% set _lp = base_custom_labels | split(',') %}
+        {% for _p in _lp %}{% set _kv = _p | split('=') %}
+        {{ _kv[0] | trim }} = "{{ _kv[1] | trim }}",
+        {% endfor %}
   }
 }
 loki.write "loki" {
   endpoint { url = "{{ base_remote_loki_url }}" }
   external_labels = {
-{% for _p in _lp %}{% set _kv = _p | split('=') %}
-    {{ _kv[0] | trim }} = "{{ _kv[1] | trim }}",
-{% endfor %}
+        mps_alloy_hostname = constants.hostname,
+        mps_alloy_os_type = constants.os,
+        mps_alloy_arch = constants.arch,
+        mps_alloy_version = constants.version,
+        {% for _p in _lp %}{% set _kv = _p | split('=') %}
+        {{ _kv[0] | trim }} = "{{ _kv[1] | trim }}",
+        {% endfor %}
   }
 }

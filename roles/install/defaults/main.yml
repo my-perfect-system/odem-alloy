@@ -3,6 +3,7 @@
 # Feature toggles — naming pattern: install_enable_<feature>
 
 install_enable_dac_read_search: true
+install_enable_livedebugging: true
 
 # Regular configuration
 # Shared alloy_* variables (user, config_dir, ports, labels, remotes)

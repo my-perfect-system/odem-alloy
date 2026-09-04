@@ -1,0 +1,9 @@
+---
+
+- name: Install exporter
+  ansible.builtin.include_tasks: install.yml
+  when: sms_enable_exporter | bool
+
+- name: Configure exporter scrape
+  ansible.builtin.include_tasks: configure_scrape.yml
+  when: sms_enable_scrape | bool

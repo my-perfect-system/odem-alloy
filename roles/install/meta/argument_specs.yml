@@ -18,3 +18,12 @@ argument_specs:
         required: false
         default: true
         description: "Grant the alloy service CAP_DAC_READ_SEARCH so cAdvisor can read the cgroup tree as a non-root user"
+      install_enable_livedebugging:
+        type: bool
+        required: false
+        default: false
+        description: >-
+          Value written to the livedebugging.alloy fragment, enabling (true)
+          or disabling (false, the Alloy default) live debugging in the Alloy
+          web UI. The fragment is always rendered so the value is enforced on
+          every run.

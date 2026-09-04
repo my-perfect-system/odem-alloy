@@ -1,0 +1,75 @@
+---
+
+- name: Install sms exporter prerequisites
+  ansible.builtin.apt:
+    name:
+      - git
+      - python3
+      - python3-venv
+    state: present
+    update_cache: true
+  become: true
+
+- name: Clone sms-webapp repository
+  ansible.builtin.git:
+    repo: "{{ sms_repo_url }}"
+    dest: "{{ sms_repo_dest }}"
+    version: "{{ sms_repo_version }}"
+    force: true
+  become: true
+
+- name: Ensure target directory permissions
+  ansible.builtin.file:
+    path: "{{ sms_repo_dest }}"
+    state: directory
+    owner: root
+    group: "{{ user_default_admin_group }}"
+    recurse: true
+    mode: "2775"
+  become: true
+
+- name: Create python virtual environment for sms-webapp
+  ansible.builtin.command:
+    cmd: python3 -m venv .venv
+    chdir: "{{ sms_repo_dest }}"
+    creates: "{{ sms_repo_dest }}/.venv/bin/pip"
+  become: true
+
+- name: Install sms-webapp into virtual environment
+  ansible.builtin.command:
+    cmd: .venv/bin/pip install -e .
+    chdir: "{{ sms_repo_dest }}"
+    creates: "{{ sms_repo_dest }}/.venv/bin/webapp-serve"
+  become: true
+
+- name: Render sms-webapp default env file
+  ansible.builtin.template:
+    src: sms-webapp.default.j2
+    dest: "{{ sms_env_file }}"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify: Restart sms-webapp
+
+- name: Render sms-webapp systemd unit
+  ansible.builtin.template:
+    src: sms-webapp.service.j2
+    dest: "/etc/systemd/system/{{ sms_service_name }}.service"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify: Restart sms-webapp
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+
+- name: Enable and start sms-webapp service
+  ansible.builtin.systemd:
+    name: "{{ sms_service_name }}"
+    enabled: true
+    state: started
+  become: true

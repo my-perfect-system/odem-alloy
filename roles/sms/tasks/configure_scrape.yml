@@ -1,0 +1,11 @@
+---
+
+- name: Render sms_exporter_scrape.alloy
+  ansible.builtin.template:
+    src: sms_exporter_scrape.alloy.j2
+    dest: "{{ base_config_dir }}/sms_exporter_scrape.alloy"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify: Restart alloy

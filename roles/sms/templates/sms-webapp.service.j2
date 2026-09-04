@@ -1,0 +1,18 @@
+[Unit]
+Description=Simple Metrics Server (sms) exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile={{ sms_env_file }}
+WorkingDirectory={{ sms_repo_dest }}
+ExecStart={{ sms_repo_dest }}/.venv/bin/webapp-serve --host {{ sms_bind }} --port {{ sms_port }} --scheme http
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

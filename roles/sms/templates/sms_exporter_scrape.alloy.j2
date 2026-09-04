@@ -1,0 +1,9 @@
+prometheus.scrape "sms_exporter" {
+  targets = [
+    {"__address__" = "{{ sms_bind }}:{{ sms_port }}",
+     "job"         = "sms"},
+  ]
+  forward_to      = [prometheus.remote_write.mimir.receiver]
+  scrape_interval = "{{ sms_scrape_interval }}"
+  metrics_path    = "/metrics"
+}

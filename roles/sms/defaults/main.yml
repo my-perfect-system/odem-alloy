@@ -1,0 +1,23 @@
+---
+
+# Feature toggles — naming pattern: sms_enable_<feature>
+sms_enable_exporter: true
+sms_enable_scrape: true
+
+# Regular configuration
+sms_repo_url: https://github.com/simple-metrics-server/sms-webapp.git
+sms_repo_version: main
+sms_repo_dest: "{{ common_default_repo_dir }}/github/simple-metrics-server/sms-webapp"
+sms_bind: 127.0.0.1
+sms_port: 9555
+sms_scrape_interval: 10s
+sms_app_scrape_interval: 60
+sms_service_name: sms-webapp
+sms_env_file: /etc/default/sms-webapp
+
+# Metric handler configs (data/config/*.json) are shipped and hot-reloaded
+# by the sms-webapp repo itself — the role does not manage them.
+
+# sms_repo_version: "main"
+# sms_repo_dest: "{{ common_default_repo_dir }}/github/simple-metrics-server/sms-webapp"
+# sms_app_scrape_interval: 15
