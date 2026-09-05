@@ -8,8 +8,9 @@ role: docker
 
 Deploy the Docker telemetry River fragments for Alloy:
 
-- `docker_metrics.alloy` — `discovery.docker` + `prometheus.scrape`
-  with a relabel drop list (`docker_metrics_exclude_containers`)
+- `docker_metrics.alloy` — `prometheus.exporter.cadvisor` +
+  `prometheus.scrape` for system-wide per-container metrics. No
+  per-container `prometheus.io/*` labels required.
 - `docker_logs.alloy` — `discovery.docker` + `loki.source.docker` for
   container logs
 
@@ -19,7 +20,8 @@ Deploy the Docker telemetry River fragments for Alloy:
 |---|---|---|
 | `docker_enable_logs` | `true` | Deploy the docker_logs.alloy fragment |
 | `docker_enable_metrics` | `true` | Deploy the docker_metrics.alloy fragment |
-| `docker_metrics_exclude_containers` | `[]` | Container names dropped via relabel |
+| `docker_cadvisor_storage_duration` | `"5m"` | cAdvisor storage_duration (window of per-container metrics kept in memory) |
+| `docker_cadvisor_scrape_interval` | `"60s"` | Scrape interval for the cAdvisor prometheus.scrape component |
 
 Shared `base_*` variables (including `base_config_dir`) are provided by
 the `odem.alloy.base` dependency — see [`../base/README.md`](../base/README.md).

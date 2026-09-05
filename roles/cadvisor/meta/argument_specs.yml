@@ -1,9 +1,0 @@
----
-argument_specs:
-  main:
-    short_description: Container cAdvisor metrics collection for Alloy
-    description:
-      - Deploys the cadvisor.alloy River fragment using the embedded
-        prometheus.exporter.cadvisor exporter over the Docker socket, scraped
-        every 60s and forwarded to the Mimir remote_write receiver.
-    options: {}

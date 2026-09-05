@@ -4,7 +4,7 @@ argument_specs:
     short_description: Docker container metrics and logs collection for Alloy
     description:
       - Deploys the Docker telemetry River fragments, i.e. docker_metrics.alloy
-        (Docker discovery + scrape with a relabel drop list) and
+        (system-wide cAdvisor exporter over the Docker socket) and
         docker_logs.alloy (Docker log collection to Loki).
       - Each fragment is gated by its own docker_enable_<feature> toggle.
     options:
@@ -17,10 +17,14 @@ argument_specs:
         type: bool
         required: false
         default: true
-        description: "Deploy the docker_metrics.alloy fragment (container metric scraping)"
-      docker_metrics_exclude_containers:
-        type: list
+        description: "Deploy the docker_metrics.alloy fragment (system-wide cAdvisor metric scraping)"
+      docker_cadvisor_storage_duration:
+        type: str
         required: false
-        elements: str
-        default: []
-        description: "Container names dropped from metric scraping via relabel"
+        default: "5m"
+        description: "cAdvisor storage_duration (window of per-container metrics kept in memory)"
+      docker_cadvisor_scrape_interval:
+        type: str
+        required: false
+        default: "60s"
+        description: "Scrape interval for the cAdvisor prometheus.scrape component"

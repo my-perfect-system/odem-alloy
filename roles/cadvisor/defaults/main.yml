@@ -1,7 +1,0 @@
----
-
-# Feature toggles — naming pattern: cadvisor_enable_<feature>
-
-# Regular configuration
-# Shared alloy_* variables (including base_config_dir) come from the
-# odem.alloy.base dependency.
