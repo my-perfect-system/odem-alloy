@@ -16,3 +16,30 @@
     groups: docker
     append: true
   become: true
+
+- name: Install acl package
+  ansible.builtin.apt:
+    name: acl
+    state: present
+  become: true
+
+# - name: Grant alloy user read and execute access on /var/lib/docker
+#   ansible.posix.acl:
+#     path: /var/lib/docker
+#     entity: "{{ base_user }}"
+#     etype: user
+#     permissions: rx
+#     state: present
+#     recursive: true
+#   become: true
+#
+# - name: Grant alloy user default read and execute access on /var/lib/docker
+#   ansible.posix.acl:
+#     path: /var/lib/docker
+#     entity: "{{ base_user }}"
+#     etype: user
+#     permissions: rx
+#     state: present
+#     recursive: true
+#     default: true
+#   become: true

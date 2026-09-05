@@ -10,3 +10,28 @@ docker_enable_metrics: true
 docker_cadvisor_storage_duration: "5m"
 
 docker_cadvisor_scrape_interval: "60s"
+
+docker_cadvisor_enabled_metrics:
+  - app
+  - cpu
+  - cpuLoad
+  - disk
+  - diskIO
+  - memory
+  - network
+  - oom_event
+  - percpu
+  - perf_event
+  - sched
+
+# Add any of these to the list above to enable additional metric kinds:
+#   - advtcp
+#   - cpu_topology
+#   - cpuset
+#   - hugetlb
+#   - memory_numa
+#   - process
+#   - referenced_memory
+#   - resctrl
+#   - tcp
+#   - udp

@@ -14,6 +14,11 @@ Deploy the Docker telemetry River fragments for Alloy:
 - `docker_logs.alloy` — `discovery.docker` + `loki.source.docker` for
   container logs
 
+To let the unprivileged `alloy` user inspect `/var/lib/docker`, the
+metrics task installs the `acl` package and grants the `alloy` user
+read+execute access (including a default ACL for newly created entries)
+via `setfacl`.
+
 ## Default variables
 
 | Variable | Default | Description |
@@ -22,6 +27,7 @@ Deploy the Docker telemetry River fragments for Alloy:
 | `docker_enable_metrics` | `true` | Deploy the docker_metrics.alloy fragment |
 | `docker_cadvisor_storage_duration` | `"5m"` | cAdvisor storage_duration (window of per-container metrics kept in memory) |
 | `docker_cadvisor_scrape_interval` | `"60s"` | Scrape interval for the cAdvisor prometheus.scrape component |
+| `docker_cadvisor_enabled_metrics` | `[app, cpu, cpuLoad, disk, diskIO, memory, network, oom_event, percpu, perf_event, sched]` | cAdvisor metric kinds to enable (overrides the default disabled list) |
 
 Shared `base_*` variables (including `base_config_dir`) are provided by
 the `odem.alloy.base` dependency — see [`../base/README.md`](../base/README.md).

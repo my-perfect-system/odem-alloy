@@ -28,3 +28,20 @@ argument_specs:
         required: false
         default: "60s"
         description: "Scrape interval for the cAdvisor prometheus.scrape component"
+      docker_cadvisor_enabled_metrics:
+        type: list
+        required: false
+        elements: str
+        default:
+          - app
+          - cpu
+          - cpuLoad
+          - disk
+          - diskIO
+          - memory
+          - network
+          - oom_event
+          - percpu
+          - perf_event
+          - sched
+        description: "cAdvisor metric kinds to enable (overrides the exporter default disabled list)"

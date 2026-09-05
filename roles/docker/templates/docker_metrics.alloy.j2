@@ -1,6 +1,7 @@
 prometheus.exporter.cadvisor "all" {
   docker_host      = "unix:///var/run/docker.sock"
   storage_duration = "{{ docker_cadvisor_storage_duration }}"
+  enabled_metrics  = {{ docker_cadvisor_enabled_metrics | tojson }}
 }
 prometheus.scrape "cadvisor" {
   targets         = prometheus.exporter.cadvisor.all.targets
