@@ -28,7 +28,7 @@ the restart handler through role-dependency propagation.
 
 ## Dependencies
 
-- `odem.base.common`
+- `odem.base.identity`
 
 ## Example usage
 

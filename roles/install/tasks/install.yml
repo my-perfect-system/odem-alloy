@@ -62,14 +62,15 @@
   become: true
   notify: Restart alloy
 
-- name: Ensure alloy systemd override directory exists
-  ansible.builtin.file:
-    path: /etc/systemd/system/alloy.service.d
-    state: directory
-    owner: root
-    group: root
-    mode: "0755"
+- name: Change alloy service user
+  ansible.builtin.lineinfile:
+    path: /usr/lib/systemd/system/alloy.service
+    regexp: '^User='
+    line: "User={{ install_service_user }}"
+    state: present
   become: true
+  notify: Restart alloy
+  when: install_enable_change_user | bool
 
 - name: Enable and start alloy service
   ansible.builtin.systemd:

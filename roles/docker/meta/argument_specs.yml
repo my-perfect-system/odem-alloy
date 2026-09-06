@@ -4,8 +4,11 @@ argument_specs:
     short_description: Docker container metrics and logs collection for Alloy
     description:
       - Deploys the Docker telemetry River fragments, i.e. docker_metrics.alloy
-        (system-wide cAdvisor exporter over the Docker socket) and
-        docker_logs.alloy (Docker log collection to Loki).
+        (embedded prometheus.exporter.cadvisor plus discovery.docker +
+        prometheus.scrape of a cAdvisor container) and docker_logs.alloy
+        (Docker log collection to Loki).
+      - Optionally deploys a cAdvisor container service (docker compose) that
+        the docker_metrics.alloy fragment scrapes for per-container metrics.
       - Each fragment is gated by its own docker_enable_<feature> toggle.
     options:
       docker_enable_logs:
@@ -17,17 +20,37 @@ argument_specs:
         type: bool
         required: false
         default: true
-        description: "Deploy the docker_metrics.alloy fragment (system-wide cAdvisor metric scraping)"
+        description: "Deploy the docker_metrics.alloy fragment (cAdvisor metric scraping via discovery.docker)"
+      docker_enable_cadvisor_service:
+        type: bool
+        required: false
+        default: true
+        description: "Deploy and start the cAdvisor container service (docker compose)"
+      docker_cadvisor_image:
+        type: str
+        required: false
+        default: "gcr.io/cadvisor/cadvisor:v0.51.0"
+        description: "cAdvisor container image"
+      docker_cadvisor_compose_dir:
+        type: str
+        required: false
+        default: "/etc/alloy/cadvisor"
+        description: "Directory holding the cAdvisor docker-compose.yml"
+      docker_cadvisor_port:
+        type: str
+        required: false
+        default: "8080"
+        description: "Port the cAdvisor container exposes its metrics on (bound to 127.0.0.1)"
+      docker_cadvisor_scrape_interval:
+        type: str
+        required: false
+        default: "60s"
+        description: "Scrape interval for the cAdvisor prometheus.scrape components"
       docker_cadvisor_storage_duration:
         type: str
         required: false
         default: "5m"
         description: "cAdvisor storage_duration (window of per-container metrics kept in memory)"
-      docker_cadvisor_scrape_interval:
-        type: str
-        required: false
-        default: "60s"
-        description: "Scrape interval for the cAdvisor prometheus.scrape component"
       docker_cadvisor_enabled_metrics:
         type: list
         required: false
@@ -44,4 +67,4 @@ argument_specs:
           - percpu
           - perf_event
           - sched
-        description: "cAdvisor metric kinds to enable (overrides the exporter default disabled list)"
+        description: "cAdvisor metric kinds to enable on the embedded exporter (overrides the default disabled list)"

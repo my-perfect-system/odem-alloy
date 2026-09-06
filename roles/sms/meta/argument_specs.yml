@@ -34,7 +34,7 @@ argument_specs:
       sms_repo_dest:
         type: str
         required: false
-        default: "{{ common_default_repo_dir }}/github/simple-metrics-server/sms-webapp"
+        default: "{{ identity_default_repo_dir }}/github/simple-metrics-server/sms-webapp"
         description: "Clone location (common repo dir, foreign org layout)"
       sms_bind:
         type: str

@@ -16,4 +16,4 @@ galaxy_info:
     - observability
     - odem-alloy
 dependencies:
-  - role: odem.base.common
+  - role: odem.base.identity

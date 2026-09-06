@@ -6,18 +6,21 @@ role: docker
 
 # `odem.alloy.docker`
 
-Deploy the Docker telemetry River fragments for Alloy:
+Deploy the Docker telemetry River fragments for Alloy plus an optional
+cAdvisor container service:
 
-- `docker_metrics.alloy` — `prometheus.exporter.cadvisor` +
-  `prometheus.scrape` for system-wide per-container metrics. No
-  per-container `prometheus.io/*` labels required.
+- `docker_metrics.alloy` — two cAdvisor sources:
+  - embedded `prometheus.exporter.cadvisor` over the Docker socket
+  - `discovery.docker` + `prometheus.scrape` of a cAdvisor container
 - `docker_logs.alloy` — `discovery.docker` + `loki.source.docker` for
   container logs
+- `cadvisor-compose.yml` — a `gcr.io/cadvisor/cadvisor` container
+  (host PID + privileged, read-only rootfs mounts) exposing its metrics
+  on `127.0.0.1:{{ docker_cadvisor_port }}`
 
-To let the unprivileged `alloy` user inspect `/var/lib/docker`, the
-metrics task installs the `acl` package and grants the `alloy` user
-read+execute access (including a default ACL for newly created entries)
-via `setfacl`.
+The cAdvisor container is added alongside the embedded exporter because
+the embedded exporter cannot map per-container network namespaces back to
+cgroups under cgroup v2, leaving `container_network_*` metrics empty.
 
 ## Default variables
 
@@ -25,9 +28,13 @@ via `setfacl`.
 |---|---|---|
 | `docker_enable_logs` | `true` | Deploy the docker_logs.alloy fragment |
 | `docker_enable_metrics` | `true` | Deploy the docker_metrics.alloy fragment |
-| `docker_cadvisor_storage_duration` | `"5m"` | cAdvisor storage_duration (window of per-container metrics kept in memory) |
-| `docker_cadvisor_scrape_interval` | `"60s"` | Scrape interval for the cAdvisor prometheus.scrape component |
-| `docker_cadvisor_enabled_metrics` | `[app, cpu, cpuLoad, disk, diskIO, memory, network, oom_event, percpu, perf_event, sched]` | cAdvisor metric kinds to enable (overrides the default disabled list) |
+| `docker_enable_cadvisor_service` | `true` | Deploy and start the cAdvisor container service |
+| `docker_cadvisor_image` | `gcr.io/cadvisor/cadvisor:v0.51.0` | cAdvisor container image |
+| `docker_cadvisor_compose_dir` | `/etc/alloy/cadvisor` | Directory holding the cAdvisor docker-compose.yml |
+| `docker_cadvisor_port` | `8080` | Port cAdvisor exposes its metrics on (bound to 127.0.0.1) |
+| `docker_cadvisor_scrape_interval` | `60s` | Scrape interval for the cAdvisor prometheus.scrape components |
+| `docker_cadvisor_storage_duration` | `5m` | Embedded cAdvisor storage_duration (window of per-container metrics kept in memory) |
+| `docker_cadvisor_enabled_metrics` | `[app, cpu, cpuLoad, disk, diskIO, memory, network, oom_event, percpu, perf_event, sched]` | Embedded cAdvisor metric kinds to enable |
 
 Shared `base_*` variables (including `base_config_dir`) are provided by
 the `odem.alloy.base` dependency — see [`../base/README.md`](../base/README.md).

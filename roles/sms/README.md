@@ -29,7 +29,7 @@ shipped and hot-reloaded by the repo itself — the role does not manage them.
 | `sms_enable_scrape` | `true` | Render the Alloy sms scrape fragment |
 | `sms_repo_url` | `https://github.com/simple-metrics-server/sms-webapp.git` | Git repository of the sms exporter |
 | `sms_repo_version` | `main` | Branch, tag or commit to check out |
-| `sms_repo_dest` | `{{ common_default_repo_dir }}/github/simple-metrics-server/sms-webapp` | Clone location (common repo dir) |
+| `sms_repo_dest` | `{{ identity_default_repo_dir }}/github/simple-metrics-server/sms-webapp` | Clone location (common repo dir) |
 | `sms_bind` | `127.0.0.1` | Address the exporter binds to (scraped by the local Alloy agent) |
 | `sms_port` | `9555` | Port the exporter listens on |
 | `sms_scrape_interval` | `10s` | Alloy scrape interval for the exporter endpoint |

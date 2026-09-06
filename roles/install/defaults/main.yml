@@ -2,10 +2,14 @@
 
 # Feature toggles — naming pattern: install_enable_<feature>
 
-install_enable_dac_read_search: true
+install_enable_change_user: false
 install_enable_livedebugging: true
 
 # Regular configuration
 # Shared alloy_* variables (user, config_dir, ports, labels, remotes)
 # come from the odem.alloy.base dependency. Only install-specific
 # variables are declared here.
+
+# User the alloy systemd service runs as when install_enable_change_user
+# is enabled (the packaged unit defaults to the "alloy" user).
+install_service_user: root

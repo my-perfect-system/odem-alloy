@@ -21,7 +21,8 @@ see [`../base/README.md`](../base/README.md).
 
 | Variable | Default | Description |
 |---|---|---|
-| `install_enable_dac_read_search` | `true` | Grant the alloy service `CAP_DAC_READ_SEARCH` so cAdvisor can read the cgroup tree as a non-root user |
+| `install_enable_change_user` | `false` | When true, change the `User=` line in `/usr/lib/systemd/system/alloy.service` to `install_service_user` (default `root`), so the agent runs with full privileges instead of the packaged `alloy` user |
+| `install_service_user` | `root` | User the alloy systemd service runs as when `install_enable_change_user` is enabled |
 | `install_enable_livedebugging` | `false` | Value written to the always-rendered `livedebugging.alloy` fragment — `true` enables live debugging in the Alloy web UI, `false` (the Alloy default) disables it |
 
 ## Dependencies

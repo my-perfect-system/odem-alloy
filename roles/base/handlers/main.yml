@@ -4,4 +4,5 @@
   ansible.builtin.systemd:
     name: alloy
     state: restarted
+    daemon_reload: true
   become: true

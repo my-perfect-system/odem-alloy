@@ -7,3 +7,7 @@
 - name: Configure docker metrics
   ansible.builtin.include_tasks: configure_docker_metrics.yml
   when: docker_enable_metrics | bool
+
+- name: Configure cadvisor service
+  ansible.builtin.include_tasks: configure_cadvisor_service.yml
+  when: docker_enable_cadvisor_service | bool
