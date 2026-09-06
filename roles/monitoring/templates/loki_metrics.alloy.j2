@@ -1,0 +1,13 @@
+{% set u = monitoring_loki_url | urlsplit %}
+prometheus.scrape "monitoring_loki" {
+  targets = [
+    {
+      "__address__" = "{{ u.hostname }}:{{ u.port | default(443 if u.scheme == 'https' else 80, true) }}",
+      "__scheme__"  = "{{ u.scheme }}",
+      "job"          = "monitoring-loki",
+    },
+  ]
+  forward_to      = [prometheus.remote_write.mimir.receiver]
+  scrape_interval = "{{ monitoring_loki_scrape_interval }}"
+  metrics_path    = "{{ u.path | default('/metrics', true) }}"
+}

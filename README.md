@@ -21,6 +21,7 @@ See [`galaxy.yml`](galaxy.yml) for the canonical values.
 | [`odem.alloy.docker`](roles/docker/README.md) | Deploy Docker telemetry fragments (docker_metrics + docker_logs). |
 | [`odem.alloy.cadvisor`](roles/cadvisor/README.md) | Deploy the cadvisor fragment (container cAdvisor metrics). |
 | [`odem.alloy.blackbox`](roles/blackbox/README.md) | Install the blackbox exporter and its Alloy scrape config. |
+| [`odem.alloy.monitoring`](roles/monitoring/README.md) | Scrape the Grafana, Loki and Prometheus `/metrics` endpoints (monitoring-stack self-metrics). |
 
 ## Installation
 

@@ -1,0 +1,56 @@
+---
+argument_specs:
+  main:
+    short_description: Monitoring stack (Grafana, Loki, Prometheus) metrics collection for Alloy
+    description:
+      - Deploys one River scrape fragment per monitoring-stack service
+        (grafana_metrics.alloy, loki_metrics.alloy, prometheus_metrics.alloy),
+        scraping each service's /metrics endpoint and forwarding to the
+        remote configured by odem.alloy.install (prometheus.remote_write.mimir).
+      - Each fragment is gated by its own monitoring_enable_<feature> toggle.
+    options:
+      monitoring_enable_grafana:
+        type: bool
+        required: false
+        default: true
+        description: "Deploy the grafana_metrics.alloy fragment"
+      monitoring_enable_loki:
+        type: bool
+        required: false
+        default: true
+        description: "Deploy the loki_metrics.alloy fragment"
+      monitoring_enable_prometheus:
+        type: bool
+        required: false
+        default: true
+        description: "Deploy the prometheus_metrics.alloy fragment"
+      monitoring_grafana_url:
+        type: str
+        required: false
+        default: http://localhost:3000/metrics
+        description: "Full scrape URL of the Grafana metrics endpoint"
+      monitoring_loki_url:
+        type: str
+        required: false
+        default: http://localhost:3100/metrics
+        description: "Full scrape URL of the Loki metrics endpoint"
+      monitoring_prometheus_url:
+        type: str
+        required: false
+        default: http://localhost:9090/metrics
+        description: "Full scrape URL of the Prometheus metrics endpoint"
+      monitoring_grafana_scrape_interval:
+        type: str
+        required: false
+        default: 30s
+        description: "Alloy scrape interval for the Grafana metrics endpoint"
+      monitoring_loki_scrape_interval:
+        type: str
+        required: false
+        default: 30s
+        description: "Alloy scrape interval for the Loki metrics endpoint"
+      monitoring_prometheus_scrape_interval:
+        type: str
+        required: false
+        default: 30s
+        description: "Alloy scrape interval for the Prometheus metrics endpoint"

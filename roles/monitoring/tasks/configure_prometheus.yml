@@ -1,0 +1,11 @@
+---
+
+- name: Render prometheus_metrics.alloy
+  ansible.builtin.template:
+    src: prometheus_metrics.alloy.j2
+    dest: "{{ base_config_dir }}/prometheus_metrics.alloy"
+    owner: root
+    group: "{{ user_default_admin_group }}"
+    mode: "0664"
+  become: true
+  notify: Restart alloy

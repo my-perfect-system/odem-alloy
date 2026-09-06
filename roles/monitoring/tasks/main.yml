@@ -1,0 +1,13 @@
+---
+
+- name: Configure grafana metrics scrape
+  ansible.builtin.include_tasks: configure_grafana.yml
+  when: monitoring_enable_grafana | bool
+
+- name: Configure loki metrics scrape
+  ansible.builtin.include_tasks: configure_loki.yml
+  when: monitoring_enable_loki | bool
+
+- name: Configure prometheus metrics scrape
+  ansible.builtin.include_tasks: configure_prometheus.yml
+  when: monitoring_enable_prometheus | bool

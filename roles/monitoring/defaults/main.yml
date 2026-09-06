@@ -1,0 +1,15 @@
+---
+
+# Feature toggles — naming pattern: monitoring_enable_<feature>
+monitoring_enable_grafana: true
+monitoring_enable_loki: true
+monitoring_enable_prometheus: true
+
+# Regular configuration
+
+monitoring_grafana_url: http://localhost:3000/metrics
+monitoring_loki_url: http://localhost:3100/metrics
+monitoring_prometheus_url: http://localhost:9090/metrics
+monitoring_grafana_scrape_interval: 30s
+monitoring_loki_scrape_interval: 30s
+monitoring_prometheus_scrape_interval: 30s
