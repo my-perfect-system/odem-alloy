@@ -10,6 +10,18 @@
     update_cache: true
   become: true
 
+- name: Validate openvpn path pairs
+  ansible.builtin.assert:
+    that: >-
+      sms_openvpn_config_paths | length
+      == sms_openvpn_status_paths | length
+    fail_msg: >-
+      sms_openvpn_config_paths and sms_openvpn_status_paths must have the
+      same number of entries (the exporter pairs them by position)
+  when: >-
+    sms_openvpn_config_paths | length > 0
+    or sms_openvpn_status_paths | length > 0
+
 - name: Clone sms-webapp repository
   ansible.builtin.git:
     repo: "{{ sms_repo_url }}"
@@ -17,6 +29,7 @@
     version: "{{ sms_repo_version }}"
     force: true
   become: true
+  notify: Restart sms-webapp
 
 - name: Ensure target directory permissions
   ansible.builtin.file:

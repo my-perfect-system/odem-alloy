@@ -1,0 +1,20 @@
+---
+argument_specs:
+  main:
+    short_description: Fail2ban log collection for Alloy
+    description:
+      - Deploys the fail2ban_logs.alloy River fragment, tailing the
+        fail2ban log file(s) and forwarding them to the remote configured
+        by odem.alloy.install (loki.write.loki).
+      - Gated by the fail2ban_enable_logs toggle.
+    options:
+      fail2ban_enable_logs:
+        type: bool
+        required: false
+        default: true
+        description: "Deploy the fail2ban_logs.alloy fragment"
+      fail2ban_log_paths:
+        type: list
+        required: false
+        elements: str
+        description: "Fail2ban log files tailed into Loki"

@@ -1,0 +1,8 @@
+---
+
+- name: Render proxy_metrics_<name>.alloy fragments
+  ansible.builtin.include_tasks: configure_target.yml
+  loop: "{{ proxy_scrape_targets }}"
+  loop_control:
+    loop_var: target
+  when: proxy_enable | bool

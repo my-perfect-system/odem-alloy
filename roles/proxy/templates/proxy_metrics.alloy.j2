@@ -1,0 +1,14 @@
+{% set u = target.url | urlsplit %}
+{% set label = target.name | regex_replace('[^a-zA-Z0-9_]', '_') %}
+prometheus.scrape "proxy_{{ label }}" {
+  targets = [
+    {
+      "__address__" = "{{ u.hostname }}:{{ u.port | default(443 if u.scheme == 'https' else 80, true) }}",
+      "__scheme__"  = "{{ u.scheme }}",
+      "job"         = "proxy-{{ target.name }}",
+    },
+  ]
+  forward_to      = [prometheus.remote_write.mimir.receiver]
+  scrape_interval = "{{ target.scrape_interval | default(proxy_default_scrape_interval) }}"
+  metrics_path    = "{{ u.path | default('/metrics', true) }}"
+}

@@ -1,0 +1,9 @@
+---
+
+# Feature toggles — naming pattern: fail2ban_enable_<feature>
+fail2ban_enable_logs: true
+
+# Regular configuration
+
+fail2ban_log_paths:
+  - /var/log/fail2ban.log

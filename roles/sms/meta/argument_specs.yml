@@ -56,6 +56,25 @@ argument_specs:
         required: false
         default: 60
         description: "Exporter SCRAPE_INTERVAL in seconds (handler collection cycle)"
+      sms_openvpn_config_paths:
+        type: list
+        elements: str
+        required: false
+        default: []
+        description:
+          - "OpenVPN config file paths (one per network), paired by position
+            with sms_openvpn_status_paths"
+          - "Each config must set `status-version 3`; `mode server` marks a
+            server, anything else a client. Empty disables OpenVPN collection."
+      sms_openvpn_status_paths:
+        type: list
+        elements: str
+        required: false
+        default: []
+        description:
+          - "OpenVPN status file paths, paired by position with
+            sms_openvpn_config_paths"
+          - "The status directive inside the config is not consulted."
       sms_service_name:
         type: str
         required: false

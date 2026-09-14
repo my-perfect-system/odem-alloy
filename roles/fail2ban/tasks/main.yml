@@ -1,0 +1,5 @@
+---
+
+- name: Configure fail2ban logs
+  ansible.builtin.include_tasks: configure_logs.yml
+  when: fail2ban_enable_logs | bool

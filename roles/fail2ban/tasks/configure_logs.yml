@@ -1,0 +1,18 @@
+---
+
+- name: Render fail2ban_logs.alloy
+  ansible.builtin.template:
+    src: fail2ban_logs.alloy.j2
+    dest: "{{ base_config_dir }}/fail2ban_logs.alloy"
+    owner: root
+    group: "{{ user_default_admin_group }}"
+    mode: "0664"
+  become: true
+  notify: Restart alloy
+
+- name: Add alloy user to adm group
+  ansible.builtin.user:
+    name: "{{ base_user }}"
+    groups: adm
+    append: true
+  become: true

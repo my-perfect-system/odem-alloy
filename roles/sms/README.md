@@ -34,8 +34,18 @@ shipped and hot-reloaded by the repo itself — the role does not manage them.
 | `sms_port` | `9555` | Port the exporter listens on |
 | `sms_scrape_interval` | `10s` | Alloy scrape interval for the exporter endpoint |
 | `sms_app_scrape_interval` | `60` | Exporter SCRAPE_INTERVAL in seconds (handler collection cycle) |
+| `sms_openvpn_config_paths` | `[]` | OpenVPN config file paths (one per network), paired by position with `sms_openvpn_status_paths` |
+| `sms_openvpn_status_paths` | `[]` | OpenVPN status file paths, paired by position with `sms_openvpn_config_paths` |
 | `sms_service_name` | `sms-webapp` | Name of the systemd service |
 | `sms_env_file` | `/etc/default/sms-webapp` | Path to the exporter default env file |
+
+The two OpenVPN lists are rendered into `/etc/default/sms-webapp` as
+`OPENVPN_CONFIG_PATH` / `OPENVPN_STATUS_PATH` (JSON arrays). The exporter
+pairs them by position, so the lists must have equal length (the role
+asserts this). Each OpenVPN config must set `status-version 3`; `mode
+server` marks a server, anything else is a client, and the `status`
+directive inside the config is not consulted. The lists default to empty,
+which disables OpenVPN metric collection.
 
 Shared `base_*` variables (including `base_config_dir`) are provided by
 the `odem.alloy.base` dependency — see [`../base/README.md`](../base/README.md).

@@ -1,0 +1,22 @@
+---
+
+# Feature toggle — naming pattern: proxy_enable_<feature>
+proxy_enable: true
+
+# Regular configuration
+#
+# proxy_scrape_targets is a list of {name, url} dicts, one fragment
+# proxy_metrics_<name>.alloy rendered per entry. Optional per-entry
+# scrape_interval overrides the default below. Example:
+#
+# proxy_scrape_targets:
+#   - name: frontend
+#     url: https://frontend.example.com/metrics
+#   - name: api
+#     url: http://10.0.0.5:8080/metrics
+#     scrape_interval: 15s
+proxy_scrape_targets: []
+
+# Default Alloy scrape interval for each proxy metric endpoint, used when a
+# target does not set its own scrape_interval. Example: "10s", "1m".
+proxy_default_scrape_interval: 30s

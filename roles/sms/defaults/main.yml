@@ -15,6 +15,12 @@ sms_app_scrape_interval: 60
 sms_service_name: sms-webapp
 sms_env_file: /etc/default/sms-webapp
 
+# OpenVPN status handler inputs (paired by position). The OpenVPN config
+# must set `status-version 3`; `mode server` marks a server, anything else
+# is a client. Empty lists disable OpenVPN metric collection.
+sms_openvpn_config_paths: []
+sms_openvpn_status_paths: []
+
 # Metric handler configs (data/config/*.json) are shipped and hot-reloaded
 # by the sms-webapp repo itself — the role does not manage them.
 

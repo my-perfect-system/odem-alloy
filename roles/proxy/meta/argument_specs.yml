@@ -1,0 +1,28 @@
+---
+argument_specs:
+  main:
+    short_description: Arbitrary metric endpoint scraping for Alloy
+    description:
+      - Renders one proxy_metrics_<name>.alloy fragment per proxy_scrape_targets
+        entry, each scraping the entry's metric endpoint and forwarding it to
+        the remote configured by odem.alloy.install (prometheus.remote_write.mimir).
+      - Endpoint URLs are parsed with urlsplit, so remote hosts, https, custom
+        ports, and reverse-proxy paths are supported.
+      - The role is gated by the proxy_enable toggle.
+    options:
+      proxy_enable:
+        type: bool
+        required: false
+        default: true
+        description: "Render the proxy_metrics_<name>.alloy fragments"
+      proxy_scrape_targets:
+        type: list
+        required: false
+        elements: dict
+        default: []
+        description: "List of {name, url, scrape_interval} metric endpoints to scrape (scrape_interval optional; falls back to proxy_default_scrape_interval)"
+      proxy_default_scrape_interval:
+        type: str
+        required: false
+        default: 30s
+        description: "Alloy scrape interval for each proxy metric endpoint"

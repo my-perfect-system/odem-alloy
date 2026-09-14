@@ -1,0 +1,9 @@
+loki.source.file "fail2ban" {
+  targets = [
+{% for path in fail2ban_log_paths %}
+    {__path__ = "{{ path }}", job = "fail2ban"}{% if not loop.last %},{% endif %}
+{% endfor %}
+  ]
+  forward_to    = [loki.write.loki.receiver]
+  tail_from_end = true
+}
