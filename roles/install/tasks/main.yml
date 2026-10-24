@@ -12,15 +12,16 @@
     mode: "2775"
   become: true
 
-- name: Find stale alloy config files
+- name: Find alloy config files to purge
   ansible.builtin.find:
     paths: "{{ base_config_dir }}"
     patterns: "*.alloy"
   register: _alloy_config_files
   changed_when: false
   become: true
+  when: install_enable_purge_config | bool
 
-- name: Remove stale alloy config files
+- name: Purge alloy config files
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: absent
@@ -28,12 +29,17 @@
   loop_control:
     label: "{{ item.path }}"
   become: true
+  when: install_enable_purge_config | bool
 
 - name: Configure logging
   ansible.builtin.include_tasks: configure_logging.yml
 
 - name: Configure remotes
   ansible.builtin.include_tasks: configure_remotes.yml
+
+- name: Configure self collector
+  ansible.builtin.include_tasks: configure_self.yml
+  when: install_enable_self_collector | bool
 
 - name: Configure livedebugging
   ansible.builtin.include_tasks: configure_livedebugging.yml

@@ -4,6 +4,9 @@
 
 install_enable_change_user: false
 install_enable_livedebugging: true
+install_enable_purge_config: true
+install_enable_self_collector: true
+install_enable_web_ui: true
 
 # Regular configuration
 # Shared alloy_* variables (user, config_dir, ports, labels, remotes)

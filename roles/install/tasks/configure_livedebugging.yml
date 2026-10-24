@@ -1,9 +1,9 @@
 ---
 
-- name: Render livedebugging.alloy
+- name: Render alloy_livedebugging.alloy
   ansible.builtin.template:
-    src: livedebugging.alloy.j2
-    dest: "{{ base_config_dir }}/livedebugging.alloy"
+    src: alloy_livedebugging.alloy.j2
+    dest: "{{ base_config_dir }}/alloy_livedebugging.alloy"
     owner: root
     group: "{{ user_default_admin_group }}"
     mode: "0664"

@@ -12,6 +12,6 @@ base_config_dir: /etc/alloy
 base_env_file: /etc/default/alloy
 base_web_ui_port: 12345
 base_metrics_port: 9400
-base_custom_labels: "os=debian13,systype=hw,physloc=de"
+base_custom_labels: "mps_alloy_org=testorg,os=debian13,systype=hw,physloc=de"
 base_remote_prometheus_url: "http://10.10.100.180:9090/api/v1/write"
 base_remote_loki_url: "http://10.10.100.180:3100/loki/api/v1/push"

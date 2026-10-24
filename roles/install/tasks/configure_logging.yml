@@ -1,9 +1,9 @@
 ---
 
-- name: Render logging.alloy
+- name: Render alloy_logging.alloy
   ansible.builtin.template:
-    src: logging.alloy.j2
-    dest: "{{ base_config_dir }}/logging.alloy"
+    src: alloy_logging.alloy.j2
+    dest: "{{ base_config_dir }}/alloy_logging.alloy"
     owner: root
     group: "{{ user_default_admin_group }}"
     mode: "0664"

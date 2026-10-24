@@ -5,9 +5,11 @@ argument_specs:
     description:
       - Installs the Grafana Alloy agent from the official Grafana apt
         repository and deploys the base River config fragments
-        (logging.alloy + remotes.alloy) plus the /etc/default/alloy env file.
-      - Stale *.alloy fragments are removed before re-rendering so disabled
-        features are cleaned up on the next run.
+        (alloy_logging.alloy + alloy_remotes.alloy + alloy_self.alloy)
+        plus the /etc/default/alloy env file.
+      - All *.alloy fragments are purged before re-rendering so stale or
+        disabled features are cleaned up on the next run, gated by
+        install_enable_purge_config.
       - Only stdlib and ansible.posix collections are required on top of
         odem.base.
       - Shared base_* variables (user, config dir, ports, labels, remotes)
@@ -29,9 +31,35 @@ argument_specs:
       install_enable_livedebugging:
         type: bool
         required: false
-        default: false
+        default: true
         description: >-
-          Value written to the livedebugging.alloy fragment, enabling (true)
-          or disabling (false, the Alloy default) live debugging in the Alloy
-          web UI. The fragment is always rendered so the value is enforced on
-          every run.
+          Value written to the alloy_livedebugging.alloy fragment, enabling
+          (true) or disabling (false, Alloy's own default) live debugging in
+          the Alloy web UI. The fragment is always rendered so the value is
+          enforced on every run.
+      install_enable_purge_config:
+        type: bool
+        required: false
+        default: true
+        description: >-
+          When true, remove every *.alloy file in the Alloy config dir before
+          rendering this role's fragments, so stale or disabled fragments are
+          cleaned up. When false, existing files are left in place.
+      install_enable_self_collector:
+        type: bool
+        required: false
+        default: true
+        description: >-
+          When true, render alloy_self.alloy, scraping Alloy's own
+          prometheus.exporter.self metrics into the Mimir remote_write. When
+          false, the fragment is skipped and cleaned up on the next run.
+      install_enable_web_ui:
+        type: bool
+        required: false
+        default: true
+        description: >-
+          When true, render CUSTOM_ARGS with
+          --server.http.listen-addr=0.0.0.0:<base_web_ui_port> in the alloy
+          env file so the web UI is reachable from the network. When false,
+          the CUSTOM_ARGS line is omitted and Alloy keeps its packaged default
+          (loopback-only UI on 127.0.0.1:12345).

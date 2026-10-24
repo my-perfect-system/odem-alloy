@@ -1,6 +1,7 @@
 prometheus.scrape "sms_exporter" {
   targets = [
     {"__address__" = "{{ sms_bind }}:{{ sms_port }}",
+     "__scheme__"  = "https",
      "job"         = "sms"},
   ]
   forward_to      = [prometheus.remote_write.mimir.receiver]
